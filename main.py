@@ -5,6 +5,8 @@
 import cv2
 import numpy as np
 from stl import mesh
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 class Cube:
     numCubes = 0
@@ -35,9 +37,8 @@ class Cube:
             [0, 1, 5],
             [0, 5, 4]])
         for i in range(len(self.vertices)):
-            self.vertices[i][0] -= 2 * midPos[0]
-            self.vertices[i][1] -= 2 * midPos[1]
-            self.vertices[i][2] -= 2 * midPos[2]
+            for l in range(3):
+                self.vertices[i][l] -= 2 * midPos[l]
 
         for j in range(len(self.faces)):
             for k in range(3):
@@ -62,8 +63,6 @@ class StlFile:
 
         for i in range(len(self.cubes)):
             object = self.cubes[i]
-            print(object.getFaces())
-            print(object.getVertices())
             if i == 0:
                 allFaces = object.getFaces()
                 allVertices = object.getVertices()
@@ -73,7 +72,6 @@ class StlFile:
                 allFaces = np.concatenate([allFaces, f])
                 allVertices = np.concatenate([allVertices, v])
 
-
         cube = mesh.Mesh(np.zeros(allFaces.shape[0], dtype=mesh.Mesh.dtype))
         for i, f in enumerate(allFaces):
             for j in range(3):
@@ -81,29 +79,35 @@ class StlFile:
 
         cube.save('cube.stl')
 
-
 def readFile():
-    # Using an existing stl file:
-    # Define the 8 vertices of the cube
-
-    # Write the mesh to file "cube.stl"
-
+    template = cv2.imread("template.png")
     img = cv2.imread("image.png")
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(gray, 75, 150)
-    for i in range(len(edges)):
-        print(np.where(edges[i] == 255))
+    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # edges = cv2.Canny(gray, 75, 150)
 
-    print(edges[5])
-    cv2.imshow("Edges", edges)
-    cv2.imshow("Image", img)
+    result = cv2.matchTemplate(img, template, cv2.TM_SQDIFF_NORMED)
+
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+    print(len(result[0]))
+
+    print(min_loc)
+    # cv2.imshow("Template Matching", result)
+    # cv2.imshow("Edges", edges)
+    # cv2.imshow("Image", img)
+    image = mpimg.imread("image.png")
+    plt.imshow(image)
+    plt.plot(min_loc[0], min_loc[1], "og", markersize=10)
+    plt.plot(min_loc[0]+180, min_loc[1]+329, "og", markersize=10)# og:shorthand for green circle
+    plt.show()
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 def writeStl():
-    cubes = [Cube((0,0,0)), Cube((0,0,1)), Cube((0,0,2))]
+    cubes = [Cube((0,0,0)), Cube((0,0,-1)), Cube((0,-1,-1)), Cube((1,-1,-1))]
     stlFile = StlFile(cubes)
     stlFile.genFile()
 
-writeStl()
+readFile()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
