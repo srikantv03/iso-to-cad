@@ -1,33 +1,28 @@
-# Iso-To-Cad
-Isometric Drawings to CAD Models
+## Iso-To-Cad
+# Inspiration
+CAD, also known as Computer-Aided Design, is an integral process towards the planning portion of many engineering projects. However, for many new engineers, having to learn the software and concepts behind CAD just to design the elements of their project seems daunting. We asked ourselves, “How can we lower the barrier of entry so beginners can start CADing without tons of technical experience?” If only there was a way to simplify the process so engineers can start prototyping right away… drum roll … introducing LaunchCAD, a way to CAD that is as simple as putting pen to paper, a launchpad for every engineer’s journey.
 
-# Details
-
-## Inspiration
-CAD, also known as Computer-Aided Design, is an integral process towards the planning portion of many engineering projects. However, for many new engineers, having to learn the software and concepts behind CAD just to design the elements of their project seems daunting. We asked ourselves, “How can we lower the barrier of entry so beginners can start CADing without tons of technical experience?” If only there was a way to simplify the process so engineers can start prototyping right away… *drum roll* … introducing LaunchCAD, a way to CAD that is as simple as putting pen to paper, a launchpad for every engineer’s journey.
-
-## What it does
+# What it does
 LaunchCAD converts two-dimensional isometric drawings into three-dimensional CAD models. Using a mobile device, users can scan an isometric drawing and upload it directly onto a computer where the image will be converted into a .stl file. These files can then be used however the user wants to, whether for additional tweaking, 3D printing, or other such projects.
 
-## How we built it
+# How we built it
 Using open-source libraries and our own code, we were able to apply neural networks, optimization algorithms, and different mathematical models to create our application. The primary conversion from the isometric drawing to tangible data was through the use of OpenCV’s template matching CNN (convolutional neural network). On top of the template matching, we used trigonometric calculations to straighten out the isometric image into planes of 2d matrices. Finally, using statistical analysis and NumPy meshes, we were able to determine the relative location of each cube and assemble a CAD model. The frontend of our application was built using React Native and the backend was built using Tornado.
 
-## Challenges we ran into
-- How to detect each cube in the CAD model
-- Line detection could not find the vertices accurately, causing us to have improperly positioned objects
-- Template matching would scramble to find matches at very low confidence and cause infinite loops
-- Murphy’s Law specifically for Android Studio and npm packages (everything that can go wrong will go wrong)
-- Finding viable camera packages that perform Base64 encoding efficiently and compressing high-density image files
+# Challenges we ran into
+How to detect each cube in the CAD model
+Line detection could not find the vertices accurately, causing us to have improperly positioned objects
+Template matching would scramble to find matches at very low confidence and cause infinite loops
+Murphy’s Law specifically for Android Studio and npm packages (everything that can go wrong will go wrong)
+Finding viable camera packages that perform Base64 encoding efficiently and compressing high-density image files
+# Accomplishments that we're proud of
+Working minimum viable product with a sleek UI design, accurate results, and a promising future for the application and the algorithm
+Able to go from isometric drawing to full-fledged CAD drawing, which accomplishes our initial goal to help engineers fast-track to the prototyping stage of their engineering design process
+# What's next for LaunchCAD
+Account for more complex drawings and shapes (potentially using models scraped on large datasets)
+Built-in warp transform for document scanning
+Live-time CAD previews
+Coloring detection
 
-## Accomplishments that we're proud of
-- Working minimum viable product with a sleek UI design, accurate results, and a promising future for the application and the algorithm
-- Able to go from isometric drawing to full-fledged CAD drawing, which accomplishes our initial goal to help engineers fast-track to the prototyping stage of their engineering design process
-
-## What's next for LaunchCAD
-- Account for more complex drawings and shapes (potentially using models scraped on large datasets)
-- Built-in warp transform for document scanning
-- Live-time CAD previews
-- Coloring detection
 
 ## Citations
 
