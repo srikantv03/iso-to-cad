@@ -5,6 +5,7 @@ import numpy as np
 from stl import mesh
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 from io import BytesIO
@@ -204,17 +205,20 @@ def readFile(inimg):
     stlFile = StlFile(cubes)
     stlFile.genFile()
 
-    plt.show()
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    Cube.numCubes = 0
+    # plt.show()
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
 def make_app():
-    return tornado.web.Application([
+    application = tornado.web.Application([
         (r"/", CADHandler),
     ])
-
-if __name__ == "__main__":
-    app = make_app()
-    app.listen(8080)
+    http_server = tornado.httpserver.HTTPServer(application)
+    port = 8080
+    http_server.listen(port)
     tornado.ioloop.IOLoop.current().start()
+
+
+make_app()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
