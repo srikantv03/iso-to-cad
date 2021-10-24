@@ -1,5 +1,7 @@
 import io
 import math
+import os
+
 import cv2
 import numpy as np
 from stl import mesh
@@ -215,7 +217,7 @@ def make_app():
         (r"/", CADHandler),
     ])
     http_server = tornado.httpserver.HTTPServer(application)
-    port = 8080
+    port = int(os.environ.get('PORT', 33507))
     http_server.listen(port)
     tornado.ioloop.IOLoop.current().start()
 
