@@ -1,10 +1,5 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import io
 import math
-
 import cv2
 import numpy as np
 from stl import mesh
@@ -152,7 +147,7 @@ def readFile(inimg):
         end_col = max_loc[0] + w // 2 + 1 if max_loc[0] + w // 2 + 1 <= res.shape[1] else res.shape[0]
         res[start_row: end_row, start_col: end_col] = 0
 
-    frontMatrix = [[1]]
+    frontMatrix = []
     lastLoc = (0,0)
 
     for i in range(len(frontFaces)):
@@ -160,26 +155,53 @@ def readFile(inimg):
 
     print(frontFaces)
 
+    ylocs = set()
+    xlocs = set()
+    for i in range(0, len(frontFaces)):
+        inx = False
+        iny = False
+        for val in ylocs:
+            if abs(frontFaces[i][1] - val) < 0.05 * (frontFaces[i][1] + val)/2:
+                iny = True
+                break
 
-    for i in range(1, len(frontFaces)):
-        val = frontFaces[i]
-        # same x loc
-        print(abs(val[0] - val[1]))
-        print(0.5 * (val[0] + val[1])/2)
-        if abs(frontFaces[i - 1][0] - val[0]) < 0.05 * (frontFaces[i - 1][0] + val[1])/2:
-            tempMatrix = []
-            for i in range(len(frontMatrix[lastLoc[0]])):
-                tempMatrix.append(0)
-            tempMatrix[lastLoc[1]] = 1
-            lastLoc = (len(frontMatrix) - 1, lastLoc[1])
-            frontMatrix.append(tempMatrix)
+        for val in xlocs:
+            if abs(frontFaces[i][0] - val) < 0.05 * (frontFaces[i][0] + val)/2:
+                inx = True
+                break
 
-        elif abs(frontFaces[i - 1][1] - val[1]) < .35 * abs((frontFaces[i - 1][0] - val[0])):
-            for i in range(len(frontMatrix)):
-                frontMatrix[i].append(0)
-            frontMatrix[lastLoc[0]][len(frontMatrix[0]) - 1] = 1
-            lastLoc = (lastLoc[0], len(frontMatrix[0]) - 1)
+        if inx == False:
+            xlocs.add(frontFaces[i][0])
+        if iny == False:
+            ylocs.add(frontFaces[i][1])
 
+
+    xlocsList = list(xlocs)
+    ylocsList = list(ylocs)
+
+    xlocsList.sort()
+    ylocsList.sort()
+
+
+    print(xlocsList)
+    print(ylocsList)
+    for x in range(len(xlocsList)):
+        frontMatrix.append([])
+        for y in range(len(ylocsList)):
+            frontMatrix[x].append(0)
+
+    for loc in frontFaces:
+        location = [0, 0]
+        for xl in range(len(xlocsList)):
+            if abs(loc[0] - xlocsList[xl]) < 0.05 * (loc[0] + xlocsList[xl]) / 2:
+                location[0] = xl
+        for yl in range(len(ylocsList)):
+            if abs(loc[1] - ylocsList[yl]) < 0.05 * (loc[1] + ylocsList[yl]) / 2:
+                location[1] = yl
+        print("location")
+        print(location)
+        frontMatrix[location[0]][location[1]] = 1
+    print(frontMatrix)
     cubes = []
     for x in range(len(frontMatrix)):
         for y in range(len(frontMatrix[x])):
