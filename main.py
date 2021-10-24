@@ -215,6 +215,6 @@ def make_app():
 
 if __name__ == "__main__":
     app = make_app()
-    app.listen(8888)
+    app.listen(8080)
     tornado.ioloop.IOLoop.current().start()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
