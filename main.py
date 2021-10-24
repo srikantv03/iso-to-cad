@@ -89,8 +89,6 @@ class StlFile:
 
         cube.save('cube.stl')
 
-    # def returnObjURI(self):
-
 
 def readb64(uri):
    encoded_data = uri.split(',')[1]
@@ -104,18 +102,11 @@ def readFile(inimg):
     w = 540
     template = cv2.imread("template.png")
     img = readb64(inimg)
-    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # edges = cv2.Canny(gray, 75, 150)
 
     method = cv2.TM_CCOEFF_NORMED
 
-    # cv2.imshow("Template Matching", result)
-    # cv2.imshow("Edges", edges)
-    # cv2.imshow("Image", img)
-
     frontFaces = list()
 
-    # fake out max_val for first run through loop
     max_val = 1
     scale = 1
     max_scale = 1
