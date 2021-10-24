@@ -1,0 +1,3 @@
+[submodule "HackGT-Frontend-Optimized"]
+	path = HackGT-Frontend-Optimized
+	url = https://github.com/mgupta8143/HackGT-Frontend-Optimized.git

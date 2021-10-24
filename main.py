@@ -217,7 +217,7 @@ def make_app():
         (r"/", CADHandler),
     ])
     http_server = tornado.httpserver.HTTPServer(application)
-    port = int(os.environ.get('PORT', 33507))
+    port = 5000
     http_server.listen(port)
     tornado.ioloop.IOLoop.current().start()
 
