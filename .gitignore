@@ -103,12 +103,16 @@ celerybeat.pid
 
 # Environments
 .env
-
 env/
-
+venv/
 ENV/
 env.bak/
 
+# images and templates
+*.png
+img/
+*.ai
+*.stl
 
 # Spyder project settings
 .spyderproject

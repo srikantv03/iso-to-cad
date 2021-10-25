@@ -16,7 +16,7 @@ import base64
 class CADHandler(tornado.web.RequestHandler):
     def post(self):
         readFile(self.get_body_argument("img"))
-        f = BytesIO(open("cube.stl", "rb").read()).read()
+        f = BytesIO(open("file.stl", "rb").read()).read()
 
         print(type(f))
         self.write(f)
@@ -90,7 +90,7 @@ class StlFile:
             for j in range(3):
                 cube.vectors[i][j] = allVertices[f[j], :]
 
-        cube.save('cube.stl')
+        cube.save('file.stl')
 
 
 def readb64(uri):
@@ -208,9 +208,9 @@ def readFile(inimg):
     stlFile.genFile()
 
     Cube.numCubes = 0
-    # plt.show()
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    plt.show()
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 def make_app():
     application = tornado.web.Application([
@@ -223,4 +223,4 @@ def make_app():
 
 
 make_app()
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
