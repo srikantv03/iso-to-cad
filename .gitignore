@@ -113,6 +113,14 @@ env.bak/
 img/
 *.ai
 *.stl
+1x/
+
+# heroku
+Aptfile
+Procfile
+
+# ide env
+.idea/
 
 # Spyder project settings
 .spyderproject
