@@ -13,6 +13,7 @@ The primary components of this software are to:
 - Expose `IsoParser` functionality through `tornado` api
 
 (Updated 2023) In an effort of simplicity and readability, we have modeled our interactions as such:
+![LaunchCAD Object Model](launchcad.png)
 
 
 ## Algorithm Design
